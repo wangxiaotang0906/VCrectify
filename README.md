@@ -114,10 +114,3 @@ python -m vcrectify run --config configs/k562_txpert_smoke.yaml --correction ran
 
 Each run independently recalibrates and acquires from its own state. Set `--acquisition random` for the acquisition-policy ablation.
 
-## Research use and licensing
-
-VCrectify's independently written framework is under [Apache-2.0](LICENSE). **TxPert code and SUMMER's official assets have separate, restrictive terms.** They are not covered by the framework license and are excluded from source distributions. Read [third-party notices](THIRD_PARTY_NOTICES.md) before using or distributing them.
-
-The release does not bundle patient-level data, model weights, credentials, upstream restricted code or claimed benchmark results. Software citation metadata is provided in [CITATION.cff](CITATION.cff); the authors will add the manuscript's final title, author list and publication identifier when available.
-
-Contributions: [CONTRIBUTING.md](CONTRIBUTING.md) · Reproducibility: [docs/validation.md](docs/validation.md)
