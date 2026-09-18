@@ -24,9 +24,9 @@ numerical:
 reasoning:
   name: summer
   backend: http
-  base_url: ${VCEVO_LLM_BASE_URL:}
-  model: ${VCEVO_LLM_MODEL:Qwen3-8B}
-  api_key_env: VCEVO_API_KEY
+  base_url: ${VCRECTIFY_LLM_BASE_URL:}
+  model: ${VCRECTIFY_LLM_MODEL:Qwen3-8B}
+  api_key_env: VCRECTIFY_API_KEY
   temperature: 0.0
   max_new_tokens: 1024
   timeout: 120

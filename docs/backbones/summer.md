@@ -2,7 +2,7 @@
 
 This is an independent implementation of the **summarize → retrieve → answer**
 procedure in [Wu et al., ICLR 2025](https://arxiv.org/abs/2502.21290), adapted to
-the VCevo manuscript. It uses actual LLM inference when a model is configured.
+the VCrectify manuscript. It uses actual LLM inference when a model is configured.
 There is no voting/classifier fallback presented as SUMMER.
 
 The example configuration leaves the HTTP endpoint empty and names Qwen3-8B.
@@ -26,12 +26,12 @@ only, and related response only. Exact gene matches also count as related.
 Examples for the query condition itself are excluded. Candidate cases are
 ordered by the mean reliability of their supporting summaries, with a seeded
 tie break. Retrieved summaries are presented in decreasing reliability order.
-This implements VCevo's reliability adaptation; it differs from unrestricted
+This implements VCrectify's reliability adaptation; it differs from unrestricted
 random sampling in the original SUMMER benchmark.
 
 The frozen LLM first answers differential expression (0 or 1). Only if it
 predicts differential expression does a second call predict direction (-1 or
-+1). This is the three-class mapping in the VCevo appendix. The original
++1). This is the three-class mapping in the VCrectify appendix. The original
 PerturbQA benchmark evaluates DE and direction as separate binary tasks.
 The original work reports Llama3-70B summaries, Llama3-8B answering, and three
 retrieval trials. This adapter uses the configured fixed model (the manuscript
@@ -54,7 +54,7 @@ Create a JSON array covering every response gene and every intervention target,
 for example `["STAT1", "TP53", "HBG1"]`, then run:
 
 ```bash
-python -m vcevo.summer_assets \
+python -m vcrectify.summer_assets \
   --summaries third_party/summer/assets/gene_summary.zip \
   --kg third_party/summer/assets/kg.zip \
   --genes data/required_genes.json \
@@ -119,13 +119,13 @@ not silently substitute aliases or missing summaries.
 Programmatic HTTP configuration:
 
 ```python
-from vcevo.backbones.summer import SummerReasoner
+from vcrectify.backbones.summer import SummerReasoner
 
 reasoner = SummerReasoner.from_config({
     "backend": "http",
     "base_url": "http://127.0.0.1:8000/v1",  # your actual configured server
     "model": "Qwen3-8B",                     # server's actual served model ID
-    "api_key_env": "VCEVO_API_KEY",
+    "api_key_env": "VCRECTIFY_API_KEY",
     "graph_path": "data/knowledge/summer/graph.json",
     "cache_dir": "runs/llm_cache",
     "temperature": 0.0,
@@ -174,7 +174,7 @@ Answers contain integer `label`, concise `rationale`, `citations` (summary IDs),
 and `case_citations` (historical example IDs). Unknown IDs and unsupported labels
 raise an error. The code never interprets malformed output or abstention as
 "unchanged." Format retries are bounded. Model rationales and case references
-are retained, while only prior summary IDs enter VCevo reliability updates.
+are retained, while only prior summary IDs enter VCrectify reliability updates.
 Model output is evidence-informed prediction, not a validated causal explanation.
 
 Cache keys include the full evidence prompt, including reliability values and

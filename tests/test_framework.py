@@ -3,17 +3,17 @@ import json
 import numpy as np
 import pytest
 
-from vcevo.artifacts import AuditLog, load_checkpoint, save_checkpoint
-from vcevo.backbones.reference import MemoryReasoner, RidgeBackbone, reference_knowledge
-from vcevo.demo import synthetic_dataset
-from vcevo.engine import OutcomeOracle, RunConfig, VCevo, calibrate_thresholds
-from vcevo.policies import Action, Reservoir, acquire, adjudicate, disagreement, errors, update_reliabilities
-from vcevo.types import Condition, KnowledgePrediction, Observation
+from vcrectify.artifacts import AuditLog, load_checkpoint, save_checkpoint
+from vcrectify.backbones.reference import MemoryReasoner, RidgeBackbone, reference_knowledge
+from vcrectify.demo import synthetic_dataset
+from vcrectify.engine import OutcomeOracle, RunConfig, VCrectify, calibrate_thresholds
+from vcrectify.policies import Action, Reservoir, acquire, adjudicate, disagreement, errors, update_reliabilities
+from vcrectify.types import Condition, KnowledgePrediction, Observation
 
 
 def make_engine(tmp_path=None, config=None, dataset=None, resume=False):
     data = dataset or synthetic_dataset()
-    return VCevo(data, RidgeBackbone(data.genes), MemoryReasoner(), reference_knowledge(),
+    return VCrectify(data, RidgeBackbone(data.genes), MemoryReasoner(), reference_knowledge(),
                  config or RunConfig(budget=4, batch_size=2), tmp_path, resume=resume)
 
 

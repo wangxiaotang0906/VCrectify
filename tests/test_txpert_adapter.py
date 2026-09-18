@@ -11,14 +11,14 @@ import sys
 import numpy as np
 import pytest
 
-from vcevo.backbones.txpert import TxPertBackbone
-from vcevo.types import Condition, Observation
+from vcrectify.backbones.txpert import TxPertBackbone
+from vcrectify.types import Condition, Observation
 
 
 @pytest.fixture
 def model_args(tmp_path):
     root = Path(__file__).resolve().parents[1]
-    source = Path(os.environ.get("VCEVO_TXPERT_SOURCE", root / "third_party/TxPert-main"))
+    source = Path(os.environ.get("VCRECTIFY_TXPERT_SOURCE", root / "third_party/TxPert-main"))
     deps = root / ".runtime/txpert_deps"
     if deps.is_dir() and str(deps) not in sys.path:
         sys.path.insert(0, str(deps))

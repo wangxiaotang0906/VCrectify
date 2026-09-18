@@ -19,7 +19,7 @@
 | Live Qwen3-8B | **Not run: service URL intentionally blank** |
 | Packaging | Wheel built, installed into an isolated workspace target, and its demo executed successfully |
 
-CI configuration runs the core suite on Python 3.9 and 3.11 on Ubuntu. A clean source-only checkout was also validated locally: **75 passed, 6 skipped**; the six official TxPert integration checks require separately installed upstream source. See the repository's [Actions page](https://github.com/wangxiaotang0906/VCevo/actions) for the current remote CI status.
+CI configuration runs the core suite on Python 3.9 and 3.11 on Ubuntu. A clean source-only checkout was also validated locally: **75 passed, 6 skipped**; the six official TxPert integration checks require separately installed upstream source. See the repository's [Actions page](https://github.com/wangxiaotang0906/VCrectify/actions) for the current remote CI status.
 
 ## Exact local real-data run
 
@@ -53,13 +53,13 @@ DES is `null` in these TxPert smoke results because the unconstrained decoder em
 
 The genuine priors cover 64 readouts plus 24 targets. The authors' one-hop summaries are empty for `HIST1H2AC` and `HIST1H4C`; four role summaries explicitly use the same authors' nonempty single-node versions. The other 172 are one-hop. Archive members, KG records, checksums and fallback metadata are preserved. Source provenance does not certify that every LLM-generated summary is biologically correct.
 
-The final offline preflight reports one issue only: missing `VCEVO_LLM_BASE_URL`. The model name is `Qwen3-8B`, and `VCEVO_API_KEY` is the credential environment variable. Preflight estimates at most **14,336 calls before cache hits and format retries** for the smoke configuration, assuming both stages for every gene. Exact LOPO and full candidate rescoring explain this count. It is not a billed-call measurement.
+The final offline preflight reports one issue only: missing `VCRECTIFY_LLM_BASE_URL`. The model name is `Qwen3-8B`, and `VCRECTIFY_API_KEY` is the credential environment variable. Preflight estimates at most **14,336 calls before cache hits and format retries** for the smoke configuration, assuming both stages for every gene. Exact LOPO and full candidate rescoring explain this count. It is not a billed-call measurement.
 
 After configuring the endpoint, run:
 
 ```bash
-python -m vcevo doctor --config configs/k562_txpert_summer.yaml
-python -m vcevo run --config configs/k562_txpert_summer.yaml
+python -m vcrectify doctor --config configs/k562_txpert_summer.yaml
+python -m vcrectify run --config configs/k562_txpert_summer.yaml
 ```
 
 The server's exact model identifier, revision, JSON output behavior and Qwen-specific chat-template option still need live validation. No live LLM accuracy, throughput, cost or paper reproduction is claimed. Local Transformers inference is implemented but was not exercised on this host.
@@ -68,4 +68,4 @@ The server's exact model identifier, revision, JSON output behavior and Qwen-spe
 
 Freeze the final full benchmark split, preprocessing, graph versions, statistical scope and validation-selected hyperparameters; choose adequate training and cell sampling budgets; then collect multiple declared seeds and report their uncertainty. These settings cannot be inferred from result tables alone. The runner intentionally keeps the test set out of selection and does not replace an absent optimized recipe with an invented one.
 
-The independent framework's Apache license does not override TxPert's EULA or SUMMER asset licenses. See [third-party notices](../THIRD_PARTY_NOTICES.md). The source repository is [wangxiaotang0906/VCevo](https://github.com/wangxiaotang0906/VCevo). Local datasets, trained artifacts and inference caches are excluded; source archives and wheels can be built using the included packaging configuration.
+The independent framework's Apache license does not override TxPert's EULA or SUMMER asset licenses. See [third-party notices](../THIRD_PARTY_NOTICES.md). The source repository is [wangxiaotang0906/VCrectify](https://github.com/wangxiaotang0906/VCrectify). Local datasets, trained artifacts and inference caches are excluded; source archives and wheels can be built using the included packaging configuration.

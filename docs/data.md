@@ -21,7 +21,7 @@ The download and these cells are not bundled into the source distribution. The s
 After installing the package, run:
 
 ```bash
-python -m vcevo.data dataset/Replogle/K562_essential_raw_singlecell_01.h5ad data/processed/k562_smoke
+python -m vcrectify.data dataset/Replogle/K562_essential_raw_singlecell_01.h5ad data/processed/k562_smoke
 ```
 
 Default settings retain at most 24 perturbation conditions, 32 cells per condition, 128 controls and 64 response genes. Eligible conditions have at least eight source cells. Conditions and cells are sampled uniformly without replacement, using separate seeds. Conditions with fewer than 32 cells retain all their available cells.
@@ -56,7 +56,7 @@ The prepared directory contains:
 The NPZ contains only numerical arrays and is opened with `allow_pickle=False`. `load_prepared()` checks the contract, including axis consistency, finite values, valid labels/q-values, and a disjoint exhaustive condition partition. `Observation` copies arrays and makes them read-only.
 
 ```python
-from vcevo.data import load_prepared
+from vcrectify.data import load_prepared
 
 dataset = load_prepared("data/processed/k562_smoke")
 print(dataset.genes)
@@ -68,7 +68,7 @@ print(dataset.splits)
 `prepare_k562()` accepts `None` for each sampling cap and supports integer or fractional split sizes. For example, use all eligible conditions and up to 128 cells per condition while preserving a fixed 2,000-gene response axis:
 
 ```python
-from vcevo.data import prepare_k562
+from vcrectify.data import prepare_k562
 
 dataset = prepare_k562(
     "dataset/Replogle/K562_essential_raw_singlecell_01.h5ad",

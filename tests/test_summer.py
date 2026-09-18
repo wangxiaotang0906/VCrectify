@@ -9,10 +9,10 @@ from zipfile import ZipFile
 
 import numpy as np
 
-from vcevo.backbones.summer import SummerReasoner, generate_gene_summaries
-from vcevo.llm import HTTPJsonClient, StructuredOutputError, _CachedClient, parse_json_object
-from vcevo.summer_assets import import_official_summer
-from vcevo.types import Condition, EvidenceItem, KnowledgeState, Observation
+from vcrectify.backbones.summer import SummerReasoner, generate_gene_summaries
+from vcrectify.llm import HTTPJsonClient, StructuredOutputError, _CachedClient, parse_json_object
+from vcrectify.summer_assets import import_official_summer
+from vcrectify.types import Condition, EvidenceItem, KnowledgeState, Observation
 
 
 class ScriptedClient:
@@ -207,7 +207,7 @@ class JsonClientTests(unittest.TestCase):
             with tempfile.TemporaryDirectory() as directory:
                 client = HTTPJsonClient("http://127.0.0.1:%d/v1" % server.server_port,
                                         "TEST-ONLY-local-HTTP-fixture", cache_dir=directory,
-                                        api_key_env="VCEVO_TEST_UNUSED_KEY",
+                                        api_key_env="VCRECTIFY_TEST_UNUSED_KEY",
                                         chat_template_kwargs={"enable_thinking": False})
                 fact = EvidenceItem("fact:A", "Test fixture input.", ("A",), "test://fixture", "fact")
                 generated = generate_gene_summaries([fact], ["A"], client)

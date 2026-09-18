@@ -79,7 +79,7 @@ class HTTPJsonClient(_CachedClient):
     keys and exceptions. Transport errors never trigger a different model.
     """
 
-    def __init__(self, base_url: str, model: str, api_key_env: str = "VCEVO_API_KEY",
+    def __init__(self, base_url: str, model: str, api_key_env: str = "VCRECTIFY_API_KEY",
                  max_new_tokens: int = 384, temperature: float = 0.0,
                  timeout: float = 120.0, cache_dir: Optional[str] = None,
                  json_mode: bool = True,
@@ -222,7 +222,7 @@ def client_from_config(config: Mapping[str, Any]) -> JsonClient:
         if not config.get("base_url"):
             raise ValueError("HTTP reasoning requires an explicit base_url")
         return HTTPJsonClient(base_url=config["base_url"],
-                              api_key_env=config.get("api_key_env", "VCEVO_API_KEY"),
+                              api_key_env=config.get("api_key_env", "VCRECTIFY_API_KEY"),
                               timeout=float(config.get("timeout", 120)),
                               json_mode=bool(config.get("json_mode", True)),
                               chat_template_kwargs=config.get("chat_template_kwargs"), **common)

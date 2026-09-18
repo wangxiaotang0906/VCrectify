@@ -1,6 +1,6 @@
 # Backbone contract
 
-VCevo has no hard dependency on a particular numerical architecture or LLM. Built-ins are loaded lazily; `module:factory` entries allow external plugins without modifying the loop.
+VCrectify has no hard dependency on a particular numerical architecture or LLM. Built-ins are loaded lazily; `module:factory` entries allow external plugins without modifying the loop.
 
 Numerical factories receive keyword arguments `genes`, `targets`, `control_cells` and their YAML options. Reasoning factories receive their YAML options. A complete minimal example is [examples/custom_backbone.py](../examples/custom_backbone.py).
 

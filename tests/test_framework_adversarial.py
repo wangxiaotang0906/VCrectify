@@ -4,12 +4,12 @@ import copy
 import numpy as np
 import pytest
 
-from vcevo.backbones.reference import (MemoryReasoner, REFERENCE_ITEM,
+from vcrectify.backbones.reference import (MemoryReasoner, REFERENCE_ITEM,
                                       RidgeBackbone, reference_knowledge)
-from vcevo.demo import synthetic_dataset
-from vcevo.engine import RunConfig, VCevo
-from vcevo.metrics import perturbation_discrimination_score, regression_metrics
-from vcevo.types import Condition, KnowledgePrediction, Observation
+from vcrectify.demo import synthetic_dataset
+from vcrectify.engine import RunConfig, VCrectify
+from vcrectify.metrics import perturbation_discrimination_score, regression_metrics
+from vcrectify.types import Condition, KnowledgePrediction, Observation
 
 
 @pytest.mark.parametrize("bad", [0.8, 257, float("nan")])
@@ -50,7 +50,7 @@ class StatefulReasoner(MemoryReasoner):
 
 def stateful_engine(path, resume=False):
     data = synthetic_dataset()
-    return VCevo(data, RidgeBackbone(data.genes), StatefulReasoner(), reference_knowledge(),
+    return VCrectify(data, RidgeBackbone(data.genes), StatefulReasoner(), reference_knowledge(),
                  RunConfig(budget=4, batch_size=2), path, resume=resume)
 
 
@@ -70,7 +70,7 @@ def test_resume_preserves_observed_memory_order(tmp_path):
     data = synthetic_dataset()
     data.splits["initial"].reverse()
     def construct(resume=False):
-        return VCevo(data, RidgeBackbone(data.genes), StatefulReasoner(), reference_knowledge(),
+        return VCrectify(data, RidgeBackbone(data.genes), StatefulReasoner(), reference_knowledge(),
                      RunConfig(budget=4, batch_size=2), tmp_path / "resume", resume=resume)
     interrupted = construct()
     interrupted.run(max_rounds=0)
@@ -97,7 +97,7 @@ def test_new_batch_is_not_present_in_its_own_replay():
             return super().update(observations, replay, control_mean, eta)
 
     data = synthetic_dataset()
-    engine = VCevo(data, RecordingBackbone(data.genes), MemoryReasoner(), reference_knowledge(),
+    engine = VCrectify(data, RecordingBackbone(data.genes), MemoryReasoner(), reference_knowledge(),
                    RunConfig(budget=2, batch_size=2, eta=0.3, correction="update_all"))
     engine.run()
     assert len(calls) == 1

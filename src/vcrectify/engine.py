@@ -110,7 +110,7 @@ def calibrate_thresholds(initial: Sequence[Observation], genes, control_mean, nu
     return gamma_m, gamma_k, fold_records
 
 
-class VCevo:
+class VCrectify:
     def __init__(self, dataset, numerical, reasoning, knowledge, config=None, output_dir=None,
                  provenance=None, resume=False):
         self.data = dataset.validate()

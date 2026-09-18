@@ -1,6 +1,6 @@
 <div align="center">
 
-# VCevo
+# VCrectify
 
 **Evidence-adjudicated continual learning for virtual cells**
 
@@ -10,9 +10,9 @@ Numerical prediction · Biological reasoning · Active acquisition
 
 </div>
 
-![VCevo architecture](docs/assets/architecture.svg)
+![VCrectify architecture](docs/assets/architecture.svg)
 
-VCevo couples a numerical virtual cell with a knowledge-based reasoner. Both predict before a perturbation outcome is revealed. An adjudicator then corrects the numerical model, the evidence reliabilities, both, or neither. Updated states jointly select the next experiment.
+VCrectify couples a numerical virtual cell with a knowledge-based reasoner. Both predict before a perturbation outcome is revealed. An adjudicator then corrects the numerical model, the evidence reliabilities, both, or neither. Updated states jointly select the next experiment.
 
 The framework is independent of the backbone. This release includes an adapter to the **official TxPert implementation**, an independently implemented **SUMMER adaptation**, and small, explicitly named reference models for testing. The biological example uses **Replogle K562 essential-gene Perturb-seq**.
 
@@ -23,10 +23,10 @@ The framework is independent of the backbone. This release includes an adapter t
 Python 3.9+; the standalone framework demo needs neither GPU nor model service.
 
 ```bash
-git clone https://github.com/wangxiaotang0906/VCevo.git
-cd VCevo
+git clone https://github.com/wangxiaotang0906/VCrectify.git
+cd VCrectify
 python -m pip install -e ".[test]"
-python -m vcevo demo --output runs/demo
+python -m vcrectify demo --output runs/demo
 python -m pytest -q
 ```
 
@@ -37,8 +37,8 @@ The demo is synthetic and checks the software contract. It writes a sealed acqui
 Download the original K562 essential-gene H5AD from the [Replogle data deposit](https://doi.org/10.25452/figshare.plus.20029387), subject to its terms, and set `prepare.source` in the preparation config.
 
 ```bash
-python -m vcevo prepare --config configs/prepare_k562_smoke.yaml
-python -m vcevo run --config configs/k562_reference.yaml
+python -m vcrectify prepare --config configs/prepare_k562_smoke.yaml
+python -m vcrectify run --config configs/k562_reference.yaml
 ```
 
 The reference run uses genuine cells with diagnostic models. It provides an inexpensive check of data preparation and the continual loop. The smoke split has 64 readout genes and 24 perturbation conditions; it is not the full benchmark. See [data provenance and preprocessing](docs/data.md).
@@ -50,11 +50,11 @@ The reference run uses genuine cells with diagnostic models. It provides an inex
 3. Set the model service configuration. The key is read only from an environment variable.
 
 ```powershell
-$env:VCEVO_LLM_BASE_URL = "https://YOUR-SERVICE/v1"
-$env:VCEVO_LLM_MODEL = "Qwen3-8B"  # exact model identifier exposed by your service
-$env:VCEVO_API_KEY = "YOUR-KEY"
-python -m vcevo doctor --config configs/k562_txpert_summer.yaml
-python -m vcevo run --config configs/k562_txpert_summer.yaml
+$env:VCRECTIFY_LLM_BASE_URL = "https://YOUR-SERVICE/v1"
+$env:VCRECTIFY_LLM_MODEL = "Qwen3-8B"  # exact model identifier exposed by your service
+$env:VCRECTIFY_API_KEY = "YOUR-KEY"
+python -m vcrectify doctor --config configs/k562_txpert_summer.yaml
+python -m vcrectify run --config configs/k562_txpert_summer.yaml
 ```
 
 `doctor` runs offline and reports missing resources, summary coverage and an upper bound on LLM calls. The loop uses exact leave-one-perturbation-out calibration, which can be expensive. Model settings and cache identity are explicit. There is no automatic fallback to a reference model when a service is unavailable.
@@ -79,7 +79,7 @@ The observed case memory admits all revealed conditions after correction, includ
 
 ## Bring your own backbone
 
-Implement the small [numerical and reasoning protocols](src/vcevo/types.py). Register a Python factory directly in YAML:
+Implement the small [numerical and reasoning protocols](src/vcrectify/types.py). Register a Python factory directly in YAML:
 
 ```yaml
 numerical:
@@ -103,8 +103,8 @@ runs/<experiment>/
 ```
 
 ```bash
-python -m vcevo run --config configs/k562_reference.yaml --max-rounds 1
-python -m vcevo run --config configs/k562_reference.yaml --resume
+python -m vcrectify run --config configs/k562_reference.yaml --max-rounds 1
+python -m vcrectify run --config configs/k562_reference.yaml --resume
 ```
 
 Run these two commands in a fresh output directory. Resume works at completed round boundaries. If interruption leaves an audit log ahead of its checkpoint, the runner stops rather than replaying an ambiguous partially completed update. See [method and operational details](docs/method.md).
@@ -112,15 +112,15 @@ Run these two commands in a fresh output directory. Resume works at completed ro
 Run an online ablation using a separate output directory:
 
 ```bash
-python -m vcevo run --config configs/k562_txpert_smoke.yaml --correction update_all --output runs/txpert_update_all
-python -m vcevo run --config configs/k562_txpert_smoke.yaml --correction random_matched --output runs/txpert_random_correction
+python -m vcrectify run --config configs/k562_txpert_smoke.yaml --correction update_all --output runs/txpert_update_all
+python -m vcrectify run --config configs/k562_txpert_smoke.yaml --correction random_matched --output runs/txpert_random_correction
 ```
 
 Each run independently recalibrates and acquires from its own state. Set `--acquisition random` for the acquisition-policy ablation.
 
 ## Research use and licensing
 
-VCevo's independently written framework is under [Apache-2.0](LICENSE). **TxPert code and SUMMER's official assets have separate, restrictive terms.** They are not covered by the framework license and are excluded from source distributions. Read [third-party notices](THIRD_PARTY_NOTICES.md) before using or distributing them.
+VCrectify's independently written framework is under [Apache-2.0](LICENSE). **TxPert code and SUMMER's official assets have separate, restrictive terms.** They are not covered by the framework license and are excluded from source distributions. Read [third-party notices](THIRD_PARTY_NOTICES.md) before using or distributing them.
 
 The release does not bundle patient-level data, model weights, credentials, upstream restricted code or claimed benchmark results. Software citation metadata is provided in [CITATION.cff](CITATION.cff); the authors will add the manuscript's final title, author list and publication identifier when available.
 

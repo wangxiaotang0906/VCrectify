@@ -83,7 +83,7 @@ REFERENCE_ITEM = "reference:observed-class-frequency"
 def reference_knowledge():
     return KnowledgeState({REFERENCE_ITEM: EvidenceItem(
         REFERENCE_ITEM, "Diagnostic baseline: predict from observed same-context response-class frequencies.",
-        (), "vcevo:reference-baseline:v1", kind="algorithm")})
+        (), "vcrectify:reference-baseline:v1", kind="algorithm")})
 
 
 class MemoryReasoner:

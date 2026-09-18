@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 from scipy import sparse
 
-from vcevo.data import (H5ExpressionReader, benjamini_hochberg, differential_response,
+from vcrectify.data import (H5ExpressionReader, benjamini_hochberg, differential_response,
                         load_prepared, normalize_counts, prepare_k562)
 
 

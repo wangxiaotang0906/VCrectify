@@ -23,6 +23,8 @@ Random-correction matches the numbers of numerical and knowledge corrections sel
 
 The seed, split manifest, gene mapping, normalization, source rows, initial set, candidate pool, test set and model options are recorded. A resume validates dataset/prior fingerprints, configurations and the entire hash-linked log. It restores models, optimizers, knowledge weights, case order, policy RNGs and reservoir state. Checkpoints use JSON trees and typed arrays, not executable pickle objects.
 
+A package rename changes the recorded source and configuration identity. Start a fresh output directory with the renamed package; use the original code and configuration to resume an earlier experiment.
+
 Transactions commit at round boundaries. A crash after a sealed event but before checkpoint completion leaves an explicit incomplete transaction. Preserve that directory and start a new run; automatic rollback/replay is not implemented. Concurrent writers to one output directory are unsupported.
 
 Test metrics are report-only, with model/RNG state restored after inference. The fixed validation split is reserved for externally specified model selection; this runner does not tune hyperparameters or select checkpoints using test metrics. Exact LOPO training and repeated candidate inference are intentionally faithful and can be computationally expensive. Cache hits reduce repeated fixed-LLM requests, but do not justify replacing current-state predictions with stale outputs.

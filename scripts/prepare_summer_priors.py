@@ -3,9 +3,9 @@ import argparse
 from dataclasses import asdict
 from pathlib import Path
 
-from vcevo.artifacts import write_json
-from vcevo.data import load_prepared
-from vcevo.summer_assets import import_official_summer
+from vcrectify.artifacts import write_json
+from vcrectify.data import load_prepared
+from vcrectify.summer_assets import import_official_summer
 
 
 def main():

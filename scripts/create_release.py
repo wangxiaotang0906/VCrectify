@@ -8,7 +8,7 @@ import zipfile
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", default="dist/vcevo-0.1.0-source.zip")
+    parser.add_argument("--output", default="dist/vcrectify-0.1.0-source.zip")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     directories = ["src", "tests", "configs", "docs", "scripts", "examples", ".github"]
@@ -28,10 +28,10 @@ def main():
             name = path.relative_to(root).as_posix()
             payload = path.read_bytes()
             manifest[name] = hashlib.sha256(payload).hexdigest()
-            entry = zipfile.ZipInfo("vcevo/" + name, date_time=(2026, 9, 18, 0, 0, 0))
+            entry = zipfile.ZipInfo("vcrectify/" + name, date_time=(2026, 9, 18, 0, 0, 0))
             entry.compress_type = zipfile.ZIP_DEFLATED
             archive.writestr(entry, payload)
-        entry = zipfile.ZipInfo("vcevo/SOURCE_MANIFEST.json", date_time=(2026, 9, 18, 0, 0, 0))
+        entry = zipfile.ZipInfo("vcrectify/SOURCE_MANIFEST.json", date_time=(2026, 9, 18, 0, 0, 0))
         entry.compress_type = zipfile.ZIP_DEFLATED
         archive.writestr(entry, json.dumps(manifest, indent=2, sort_keys=True))
     print(json.dumps({"archive": str(output), "files": len(manifest),

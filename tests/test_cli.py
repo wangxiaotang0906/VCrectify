@@ -10,11 +10,11 @@ import numpy as np
 import pytest
 import yaml
 
-from vcevo import cli
-from vcevo.artifacts import load_checkpoint
-from vcevo.data import save_prepared
-from vcevo.demo import synthetic_dataset
-from vcevo.types import Condition, EvidenceItem, Observation, PreparedDataset
+from vcrectify import cli
+from vcrectify.artifacts import load_checkpoint
+from vcrectify.data import save_prepared
+from vcrectify.demo import synthetic_dataset
+from vcrectify.types import Condition, EvidenceItem, Observation, PreparedDataset
 
 
 def tiny_fixture():
@@ -49,7 +49,7 @@ def write_fixture_config(directory, *, summer=False, endpoint=""):
         config["knowledge"] = {"items_path": "items.json"}
         config["reasoning"] = {"name": "summer", "backend": "http", "base_url": endpoint,
                                "model": "TEST-ONLY-SUMMER-HTTP-INTEGRATION-FIXTURE",
-                               "api_key_env": "VCEVO_TEST_CLI_KEY", "graph_path": "graph.json",
+                               "api_key_env": "VCRECTIFY_TEST_CLI_KEY", "graph_path": "graph.json",
                                "cache_dir": "cache", "response_retries": 0, "seed": 17}
     path = directory / "config.yaml"
     path.write_text(yaml.safe_dump(config), encoding="utf-8")
@@ -58,8 +58,8 @@ def write_fixture_config(directory, *, summer=False, endpoint=""):
 
 def test_blank_endpoint_preflight_never_constructs_models_or_calls_http(tmp_path, capsys):
     config = write_fixture_config(tmp_path, summer=True)
-    with patch("vcevo.llm.urlopen", side_effect=AssertionError("Unexpected network access")) as transport, \
-            patch("vcevo.cli.reasoning_backbone", side_effect=AssertionError("Unexpected model construction")) as factory:
+    with patch("vcrectify.llm.urlopen", side_effect=AssertionError("Unexpected network access")) as transport, \
+            patch("vcrectify.cli.reasoning_backbone", side_effect=AssertionError("Unexpected model construction")) as factory:
         assert cli.main(["doctor", "--config", str(config)]) == 2
         report = json.loads(capsys.readouterr().out)
         assert not report["ready"]
@@ -73,22 +73,22 @@ def test_blank_endpoint_preflight_never_constructs_models_or_calls_http(tmp_path
 
 def test_config_paths_are_project_relative_and_env_key_value_is_not_read(tmp_path, monkeypatch):
     project = tmp_path / "project"
-    config_file = write_fixture_config(project, summer=True, endpoint="${VCEVO_TEST_ENDPOINT:}")
+    config_file = write_fixture_config(project, summer=True, endpoint="${VCRECTIFY_TEST_ENDPOINT:}")
     config = yaml.safe_load(config_file.read_text(encoding="utf-8"))
     config["project_root"] = ".."
     settings = project / "settings"
     settings.mkdir()
     config_file = settings / "config.yaml"
     config_file.write_text(yaml.safe_dump(config), encoding="utf-8")
-    monkeypatch.setenv("VCEVO_TEST_ENDPOINT", "http://127.0.0.1:8765/v1")
-    monkeypatch.setenv("VCEVO_TEST_CLI_KEY", "PRIVATE_TEST_SENTINEL_DO_NOT_PERSIST")
+    monkeypatch.setenv("VCRECTIFY_TEST_ENDPOINT", "http://127.0.0.1:8765/v1")
+    monkeypatch.setenv("VCRECTIFY_TEST_CLI_KEY", "PRIVATE_TEST_SENTINEL_DO_NOT_PERSIST")
     monkeypatch.chdir(tmp_path)
     loaded = cli.load_config(config_file)
     assert loaded["data"]["prepared"] == str((project / "prepared").resolve())
     assert loaded["reasoning"]["graph_path"] == str((project / "graph.json").resolve())
     assert loaded["reasoning"]["cache_dir"] == str((project / "cache").resolve())
     assert loaded["reasoning"]["base_url"] == "http://127.0.0.1:8765/v1"
-    assert loaded["reasoning"]["api_key_env"] == "VCEVO_TEST_CLI_KEY"
+    assert loaded["reasoning"]["api_key_env"] == "VCRECTIFY_TEST_CLI_KEY"
     assert "PRIVATE_TEST_SENTINEL" not in json.dumps(loaded)
 
 
@@ -126,7 +126,7 @@ def test_reference_cli_run_resume_matches_full_run_and_writes_artifacts(tmp_path
 def test_whole_engine_summer_http_fixture_runs_and_resumes_without_persisting_key(tmp_path, monkeypatch, capsys):
     requests = []
     secret = "PRIVATE_TEST_SENTINEL_DO_NOT_PERSIST"
-    monkeypatch.setenv("VCEVO_TEST_CLI_KEY", secret)
+    monkeypatch.setenv("VCRECTIFY_TEST_CLI_KEY", secret)
 
     class FixtureHandler(BaseHTTPRequestHandler):
         def do_POST(self):
@@ -177,11 +177,11 @@ def test_whole_engine_summer_http_fixture_runs_and_resumes_without_persisting_ke
 def test_release_source_artifacts_and_default_summer_configuration(tmp_path, monkeypatch):
     root = Path(__file__).resolve().parents[1]
     for path in ["pyproject.toml", "README.md", "README.zh-CN.md", "CITATION.cff",
-                 "docs/backbones/summer.md", "src/vcevo/summer_assets.py",
+                 "docs/backbones/summer.md", "src/vcrectify/summer_assets.py",
                  "configs/k562_txpert_summer.yaml", "THIRD_PARTY_NOTICES.md"]:
         assert (root / path).is_file(), path
-    monkeypatch.delenv("VCEVO_LLM_BASE_URL", raising=False)
-    monkeypatch.delenv("VCEVO_LLM_MODEL", raising=False)
+    monkeypatch.delenv("VCRECTIFY_LLM_BASE_URL", raising=False)
+    monkeypatch.delenv("VCRECTIFY_LLM_MODEL", raising=False)
     config = cli.load_config(root / "configs/k562_txpert_summer.yaml")
     assert config["reasoning"]["backend"] == "http"
     assert config["reasoning"]["base_url"] == ""

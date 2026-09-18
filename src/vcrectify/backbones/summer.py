@@ -1,7 +1,7 @@
-"""SUMMER adaptation for VCevo: summaries, graph retrieval, and fixed-LLM QA.
+"""SUMMER adaptation for VCrectify: summaries, graph retrieval, and fixed-LLM QA.
 
 Independent implementation of the algorithm in Wu et al. (ICLR 2025), with the
-two-stage three-class adapter and reliability ordering described in VCevo.
+two-stage three-class adapter and reliability ordering described in VCrectify.
 This module does not import or redistribute Genentech's non-commercial code.
 """
 from __future__ import annotations
@@ -84,7 +84,7 @@ class SummerReasoner:
     Each summary has ``metadata['role']`` equal to ``perturbation`` or ``response``.
     """
 
-    name = "SUMMER (VCevo two-stage adaptation)"
+    name = "SUMMER (VCrectify two-stage adaptation)"
 
     def __init__(self, client: JsonClient, graph: Optional[Mapping[str, Sequence[str]]] = None,
                  seed: int = 0, neighbors: int = 10, cases_per_bucket: int = 5,

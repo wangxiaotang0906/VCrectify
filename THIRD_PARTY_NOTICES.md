@@ -1,8 +1,8 @@
 # Third-party notices and license scope
 
-The root [Apache License 2.0](LICENSE) applies to independently authored VCevo framework code and documentation. It does **not** relicense external models, model-specific materials covered by another license, datasets, knowledge graphs, gene summaries, generated model artifacts, or dependencies. The complete configured research system includes components with non-commercial terms; it must not be described as an unrestricted Apache-licensed bundle.
+The root [Apache License 2.0](LICENSE) applies to independently authored VCrectify framework code and documentation. It does **not** relicense external models, model-specific materials covered by another license, datasets, knowledge graphs, gene summaries, generated model artifacts, or dependencies. The complete configured research system includes components with non-commercial terms; it must not be described as an unrestricted Apache-licensed bundle.
 
-The standard Apache license text includes its unmodified copyright-notice template; that template is not an assertion that a third-party package author owns VCevo. Existing manuscript text and third-party bibliographic material are not assigned a new license by this code release.
+The standard Apache license text includes its unmodified copyright-notice template; that template is not an assertion that a third-party package author owns VCrectify. Existing manuscript text and third-party bibliographic material are not assigned a new license by this code release.
 
 ## TxPert
 
@@ -11,9 +11,9 @@ The standard Apache license text includes its unmodified copyright-notice templa
 - Controlling upstream license: [Recursion Non-Commercial End User License Agreement](https://github.com/valence-labs/TxPert/blob/08d82eea86746b044cf7531f4ec8c5f60e1cb73f/license.pdf), locally retained at `third_party/TxPert-main/license.pdf` when the external source is downloaded.
 - Imported model source: [`gspp/models/txpert.py`](https://github.com/valence-labs/TxPert/blob/08d82eea86746b044cf7531f4ec8c5f60e1cb73f/gspp/models/txpert.py).
 
-The VCevo adapter imports the original TxPert class from an external checkout. The inspected upstream source was not modified. The adapter adds VCevo condition-level fitting, correction, replay, state serialization and evaluation interfaces around that class. Local runs and their trained model artifacts were created using TxPert.
+The VCrectify adapter imports the original TxPert class from an external checkout. The inspected upstream source was not modified. The adapter adds VCrectify condition-level fitting, correction, replay, state serialization and evaluation interfaces around that class. Local runs and their trained model artifacts were created using TxPert.
 
-The EULA permits its stated non-commercial research, academic and educational purposes and imposes additional conditions. It includes attribution requirements, restrictions on use and redistribution, and terms governing **Derivative Technology** and associated arising intellectual-property rights. In particular, section 7 requires an essentially equivalent license for such derivative technology. The independent VCevo Apache grant does not override these terms or determine that every model-specific adaptation/output is outside their scope. Preserve the upstream EULA with any material governed by it; the notices here are not a replacement license.
+The EULA permits its stated non-commercial research, academic and educational purposes and imposes additional conditions. It includes attribution requirements, restrictions on use and redistribution, and terms governing **Derivative Technology** and associated arising intellectual-property rights. In particular, section 7 requires an essentially equivalent license for such derivative technology. The independent VCrectify Apache grant does not override these terms or determine that every model-specific adaptation/output is outside their scope. Preserve the upstream EULA with any material governed by it; the notices here are not a replacement license.
 
 Required TxPert model attribution, with the upstream template completed:
 
@@ -37,7 +37,7 @@ The framework's SUMMER adapter is an independent implementation of the published
 
 The separate [official PerturbQA repository](https://github.com/Genentech/PerturbQA) is governed by the [Genentech Non-Commercial Software License Version 1.0](https://github.com/Genentech/PerturbQA/blob/main/LICENSE.txt). That license is **not** ordinary Apache 2.0. Users obtaining the official code separately receive its own terms.
 
-Published knowledge graph and summary assets are obtained separately from the authors' [Zenodo data distribution, version 1](https://doi.org/10.5281/zenodo.14915313). Its [data README](https://zenodo.org/records/14915313/files/README.md?download=1) states that `kg.zip` and `gene_summary.zip` retain their source-database licenses. They are not uniformly CC BY 4.0 and are not relicensed by VCevo.
+Published knowledge graph and summary assets are obtained separately from the authors' [Zenodo data distribution, version 1](https://doi.org/10.5281/zenodo.14915313). Its [data README](https://zenodo.org/records/14915313/files/README.md?download=1) states that `kg.zip` and `gene_summary.zip` retain their source-database licenses. They are not uniformly CC BY 4.0 and are not relicensed by VCrectify.
 
 | Source database in the upstream data README | Terms stated there |
 | --- | --- |
@@ -58,13 +58,13 @@ The local acceptance cache verified the published archive checksums:
 | `gene_summary.zip` | 6,417,757 | `d14e71bedaece4e09105e4f85b819591` |
 | `kg.zip` | 46,080,292 | `90977691ebac65e02765e34c31b66bd1` |
 
-The unmodified upstream data README is retained in the local cache as `third_party/summer/assets/README.upstream.md` (SHA-256 `2e77a6b623936943af9d3f08e9a8730b89e527b815fbda8e220d429751313a08`). Source release instructions download these assets from their authors rather than embedding the archives in VCevo. See [the SUMMER adapter guide](docs/backbones/summer.md).
+The unmodified upstream data README is retained in the local cache as `third_party/summer/assets/README.upstream.md` (SHA-256 `2e77a6b623936943af9d3f08e9a8730b89e527b815fbda8e220d429751313a08`). Source release instructions download these assets from their authors rather than embedding the archives in VCrectify. See [the SUMMER adapter guide](docs/backbones/summer.md).
 
 ## Replogle K562 expression data
 
 The K562 example uses `K562_essential_raw_singlecell_01.h5ad` from Joseph Replogle and Jonathan Weissman's [processed Perturb-seq data deposition](https://doi.org/10.25452/figshare.plus.20029387), identified by its authors as **CC BY 4.0**. Cite Replogle et al., [Mapping information-rich genotype–phenotype landscapes with genome-scale Perturb-seq](https://doi.org/10.1016/j.cell.2022.05.013), Cell (2022), and the data deposition.
 
-The original H5AD is not included in the framework source distribution. VCevo's prepared data are transformed/subsampled research artifacts; their manifests document normalization, duplicate-symbol aggregation, sampling, gene selection and statistical analysis. These transformations do not replace the original data attribution or license. Details are in [the data contract](docs/data.md).
+The original H5AD is not included in the framework source distribution. VCrectify's prepared data are transformed/subsampled research artifacts; their manifests document normalization, duplicate-symbol aggregation, sampling, gene selection and statistical analysis. These transformations do not replace the original data attribution or license. Details are in [the data contract](docs/data.md).
 
 ## Language models, runtimes and Python dependencies
 

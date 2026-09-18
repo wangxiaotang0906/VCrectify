@@ -54,7 +54,7 @@ PDS depends on both the response-gene axis and the comparison pool. For four con
 For one condition, call:
 
 ```python
-from vcevo.metrics import differential_expression_score
+from vcrectify.metrics import differential_expression_score
 
 result = differential_expression_score(
     predicted_cells,

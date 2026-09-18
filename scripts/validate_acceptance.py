@@ -8,8 +8,8 @@ from copy import deepcopy
 import json
 from pathlib import Path
 
-from vcevo.artifacts import write_json
-from vcevo.cli import load_config, run_config
+from vcrectify.artifacts import write_json
+from vcrectify.cli import load_config, run_config
 
 
 def main():

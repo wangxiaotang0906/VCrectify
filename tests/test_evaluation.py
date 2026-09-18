@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
 
-from vcevo.backbones.reference import RidgeBackbone
-from vcevo.metrics import (classification_metrics, deg_subset_metrics,
+from vcrectify.backbones.reference import RidgeBackbone
+from vcrectify.metrics import (classification_metrics, deg_subset_metrics,
                            differential_expression_score, regression_metrics)
 
 

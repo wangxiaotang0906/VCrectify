@@ -1,4 +1,4 @@
-# VCevo：证据裁决驱动的虚拟细胞持续学习框架
+# VCrectify：证据裁决驱动的虚拟细胞持续学习框架
 
 框架将数值 VC、知识推理 VC、主动获取、裁决与持续修正分开实现，可以替换 backbone。示例接入官方 **TxPert** 架构，以及基于 **Qwen3-8B** 服务的 **SUMMER 方法适配器**，使用真实 Replogle K562 essential-gene 数据。
 
@@ -7,19 +7,19 @@
 ## 快速运行
 
 ```bash
-git clone https://github.com/wangxiaotang0906/VCevo.git
-cd VCevo
+git clone https://github.com/wangxiaotang0906/VCrectify.git
+cd VCrectify
 python -m pip install -e ".[test]"
-python -m vcevo demo --output runs/demo
+python -m vcrectify demo --output runs/demo
 python -m pytest -q
 ```
 
 `demo` 是合成数据上的工程检查。真实 K562 流程：
 
 ```bash
-python -m vcevo prepare --config configs/prepare_k562_smoke.yaml
-python -m vcevo run --config configs/k562_reference.yaml
-python -m vcevo run --config configs/k562_txpert_smoke.yaml
+python -m vcrectify prepare --config configs/prepare_k562_smoke.yaml
+python -m vcrectify run --config configs/k562_reference.yaml
+python -m vcrectify run --config configs/k562_txpert_smoke.yaml
 ```
 
 第二条使用明确命名的诊断模型，第三条使用真实 TxPert 与诊断推理器。两者都不代表完整 TxPert + SUMMER 的论文结果。TxPert 依赖和图数据配置见[适配文档](docs/backbones/txpert.md)。
@@ -29,11 +29,11 @@ python -m vcevo run --config configs/k562_txpert_smoke.yaml
 按你的要求，服务地址保留为空，模型默认 `Qwen3-8B`。填写服务实际暴露的模型名；密钥通过环境变量设置。
 
 ```powershell
-$env:VCEVO_LLM_BASE_URL = "https://YOUR-SERVICE/v1"
-$env:VCEVO_LLM_MODEL = "Qwen3-8B"
-$env:VCEVO_API_KEY = "YOUR-KEY"
-python -m vcevo doctor --config configs/k562_txpert_summer.yaml
-python -m vcevo run --config configs/k562_txpert_summer.yaml
+$env:VCRECTIFY_LLM_BASE_URL = "https://YOUR-SERVICE/v1"
+$env:VCRECTIFY_LLM_MODEL = "Qwen3-8B"
+$env:VCRECTIFY_API_KEY = "YOUR-KEY"
+python -m vcrectify doctor --config configs/k562_txpert_summer.yaml
+python -m vcrectify run --config configs/k562_txpert_summer.yaml
 ```
 
 使用前按 [SUMMER 文档](docs/backbones/summer.md)准备带来源标识的知识摘要及图。没有地址时程序会明确报缺失配置，不会自动替换成假推理或下载其他模型。`doctor` 不调用服务，并估算 LLM 调用上限。

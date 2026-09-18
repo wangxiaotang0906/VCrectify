@@ -1,11 +1,11 @@
 cff-version: 1.2.0
-message: "Please cite the VCevo software and the underlying backbones and data. Manuscript bibliographic metadata will be added by its authors."
+message: "Please cite the VCrectify software and the underlying backbones and data. Manuscript bibliographic metadata will be added by its authors."
 type: software
-repository-code: "https://github.com/wangxiaotang0906/VCevo"
-title: "VCevo: Evidence-adjudicated continual learning for virtual cells"
+repository-code: "https://github.com/wangxiaotang0906/VCrectify"
+title: "VCrectify: Evidence-adjudicated continual learning for virtual cells"
 version: 0.1.0
 date-released: 2026-09-18
 license: Apache-2.0
 authors:
-  - name: "VCevo contributors"
+  - name: "VCrectify contributors"
 abstract: "A backbone-independent research framework for active acquisition, evidence adjudication, numerical correction and explicit knowledge reliability updates."

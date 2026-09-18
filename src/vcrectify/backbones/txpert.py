@@ -15,7 +15,7 @@ from typing import Any, Dict, Mapping, Optional, Sequence
 
 import numpy as np
 
-from vcevo.types import Condition, Observation
+from vcrectify.types import Condition, Observation
 
 
 class TxPertBackbone:

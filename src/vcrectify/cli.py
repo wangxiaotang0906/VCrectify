@@ -20,7 +20,7 @@ from .artifacts import write_json
 from .backbones.reference import MemoryReasoner, RidgeBackbone, reference_knowledge
 from .data import load_prepared, prepare_k562
 from .demo import synthetic_dataset
-from .engine import RunConfig, VCevo
+from .engine import RunConfig, VCrectify
 from .registry import numerical_backbone, reasoning_backbone
 from .types import EvidenceItem, KnowledgeState
 
@@ -112,7 +112,7 @@ def diagnose(config):
     if reasoning.get("name") == "summer":
         if reasoning.get("backend", "http") == "http":
             if not reasoning.get("base_url", "").strip():
-                issues.append("Set VCEVO_LLM_BASE_URL (or reasoning.base_url); no service URL is configured")
+                issues.append("Set VCRECTIFY_LLM_BASE_URL (or reasoning.base_url); no service URL is configured")
             if not reasoning.get("model", "").strip():
                 issues.append("Set the exact model ID served by the endpoint")
         elif importlib.util.find_spec("transformers") is None:
@@ -168,7 +168,7 @@ def run_config(config, output=None, resume=False, max_rounds=None):
     # name, model settings and endpoint URL (which must contain no credentials).
     provenance = {"numerical": config["numerical"], "reasoning": config["reasoning"],
                   "knowledge": config["knowledge"], "python": platform.python_version(),
-                  "vcevo_version": __version__,
+                  "vcrectify_version": __version__,
                   "numerical_implementation": getattr(numerical, "metadata", {})}
     dependencies = {}
     for package in ["numpy", "scipy", "h5py", "PyYAML", "torch", "torch-geometric", "torch-scatter"]:
@@ -184,7 +184,7 @@ def run_config(config, output=None, resume=False, max_rounds=None):
         source_hash.update(source.read_bytes())
     provenance["framework_source_sha256"] = source_hash.hexdigest()
     start = time.perf_counter()
-    runner = VCevo(data, numerical, reasoning, knowledge, RunConfig(**config.get("run", {})),
+    runner = VCrectify(data, numerical, reasoning, knowledge, RunConfig(**config.get("run", {})),
                    output, provenance=provenance, resume=resume)
     history = runner.run(max_rounds=max_rounds)
     summary = {"output": str(output), "round": runner.round, "acquired": runner.acquired,
@@ -197,7 +197,7 @@ def run_config(config, output=None, resume=False, max_rounds=None):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(prog="vcevo", description=__doc__)
+    parser = argparse.ArgumentParser(prog="vcrectify", description=__doc__)
     parser.add_argument("--version", action="version", version=__version__)
     commands = parser.add_subparsers(dest="command", required=True)
     demo = commands.add_parser("demo", help="CPU synthetic contract run; no biological claims")
@@ -218,7 +218,7 @@ def main(argv=None):
     try:
         if args.command == "demo":
             data = synthetic_dataset(args.seed)
-            runner = VCevo(data, RidgeBackbone(data.genes, seed=args.seed), MemoryReasoner(),
+            runner = VCrectify(data, RidgeBackbone(data.genes, seed=args.seed), MemoryReasoner(),
                            reference_knowledge(), RunConfig(seed=args.seed), args.output,
                            provenance={"synthetic": True, "purpose": "framework engineering check"})
             history = runner.run()
@@ -247,7 +247,7 @@ def main(argv=None):
         print(json.dumps(result, indent=2, ensure_ascii=False))
         return 0
     except (ValueError, OSError, ImportError, KeyError, RuntimeError) as exc:
-        print("vcevo: " + str(exc), file=sys.stderr)
+        print("vcrectify: " + str(exc), file=sys.stderr)
         return 2
 
 

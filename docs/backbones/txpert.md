@@ -2,7 +2,7 @@
 
 The adapter imports **the original `gspp.models.txpert.TxPert` class** from
 [valence-labs/TxPert](https://github.com/valence-labs/TxPert). It does not replace
-TxPert with a small MLP. It exposes the standard VCevo numerical contract so
+TxPert with a small MLP. It exposes the standard VCrectify numerical contract so
 another numerical model can be selected without changing the acquisition loop.
 
 ## Source and licensing
@@ -12,12 +12,12 @@ The downloaded GitHub ZIP has SHA-256
 `1bba7c8c1672a1cec7fa030ec6189b9c0dd1b0e3f4a07c23c2387bc31829f03d`.
 The adapter records SHA-256 hashes of the actual imported model file, the upstream
 Python source tree, and each prior graph in its metadata. Third-party source, graphs and checkpoints remain external
-assets; they are not redistributed as VCevo source.
+assets; they are not redistributed as VCrectify source.
 
 **TxPert has a separate Recursion Non-Commercial End User License Agreement.**
 See the upstream [license](https://github.com/valence-labs/TxPert/blob/main/license.pdf)
 and [README](https://github.com/valence-labs/TxPert#license) for its full terms.
-The VCevo repository does not relicense TxPert. We used the TxPert AI model,
+The VCrectify repository does not relicense TxPert. We used the TxPert AI model,
 available from Recursion Pharmaceuticals, with software documentation at
 [the official repository](https://github.com/valence-labs/TxPert).
 
@@ -81,13 +81,13 @@ can appear in their node vocabulary, while expression labels enter the numerical
 model only through revealed observations. Do not build the prior graph using
 held-out or future expression measurements.
 
-## VCevo adaptation details
+## VCrectify adaptation details
 
 - The upstream basal MLP, graph perturbation encoder, latent addition and decoder
   execute unchanged. Default `variant: gat` selects upstream GATv2.
 - The example uses LayerNorm and smaller widths than upstream's paper config so
   small continual batches remain valid. Widths, depth, dropout and epochs are
-  explicit configuration. This is a **VCevo training configuration**, not an
+  explicit configuration. This is a **VCrectify training configuration**, not an
   official pretrained checkpoint.
 - Initialization trains from scratch on D0. For each condition, target cells and
   context-matched control cells are sampled, preserving the complete gene axis.
@@ -115,15 +115,15 @@ Official pretrained checkpoints are available from [Zenodo
 15420279](https://doi.org/10.5281/zenodo.15420279): checkpoints ZIP approximately
 292 MB; single-cell-line cache approximately 678 MB; cross-cell-line cache
 approximately 1.75 GB. They are not automatically downloaded or loaded. Their
-training conditions may overlap VCevo's future/test conditions; an audited split
+training conditions may overlap VCrectify's future/test conditions; an audited split
 and exact feature mapping would be needed before using them in continual-learning
 experiments.
 
 ## Python example
 
 ```python
-from vcevo.backbones.txpert import TxPertBackbone
-from vcevo.data import load_prepared
+from vcrectify.backbones.txpert import TxPertBackbone
+from vcrectify.data import load_prepared
 
 data = load_prepared("data/processed/k562_smoke")
 model = TxPertBackbone(
