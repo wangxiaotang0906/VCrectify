@@ -1,0 +1,17 @@
+# Genuine data, intentionally small engineering validation split.
+project_root: ..
+prepare:
+  source: dataset/Replogle/K562_essential_raw_singlecell_01.h5ad
+  output: data/processed/k562_smoke
+  n_genes: 64
+  max_conditions: 24
+  max_control_cells: 128
+  max_cells_per_condition: 32
+  min_cells_per_condition: 8
+  initial_size: 8
+  test_size: 4
+  validation_size: 4
+  seed: 17
+  cell_seed: 18
+  bh_family: all_genes
+  batch_rows: 128

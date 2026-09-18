@@ -1,0 +1,22 @@
+project_root: ..
+data:
+  prepared: data/processed/k562_smoke
+numerical:
+  name: reference_ridge
+  seed: 17
+  regularization: 1.0
+reasoning:
+  name: reference_memory
+knowledge:
+  name: reference
+run:
+  seed: 17
+  batch_size: 2
+  budget: 8
+  replay_capacity: 8
+  eta: 0.5
+  threshold_quantile: 0.9
+  acquisition: disagreement
+  correction: adjudicated
+  evaluate_every: 1
+output: runs/k562_reference

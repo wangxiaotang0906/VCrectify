@@ -1,0 +1,57 @@
+# Live numerical + reasoning pipeline. Fill the service URL to run.
+# The small epochs/readout panel are for integration, not paper reproduction.
+project_root: ..
+python_paths: [.runtime/txpert_deps]
+data:
+  prepared: data/processed/k562_smoke
+numerical:
+  name: txpert
+  source_dir: third_party/TxPert-main
+  graph_path: third_party/TxPert-main/data/graphs/go/go_top_50.csv
+  seed: 17
+  device: cpu
+  fit_epochs: 3
+  update_epochs: 2
+  lr: 0.001
+  hidden_dim: 32
+  latent_dim: 16
+  graph_hidden_dim: 16
+  graph_layers: 1
+  dropout: 0.0
+  batch_size: 4
+  cells_per_condition: 4
+  top_k: 20
+reasoning:
+  name: summer
+  backend: http
+  base_url: ${VCEVO_LLM_BASE_URL:}
+  model: ${VCEVO_LLM_MODEL:Qwen3-8B}
+  api_key_env: VCEVO_API_KEY
+  temperature: 0.0
+  max_new_tokens: 1024
+  timeout: 120
+  cache_dir: .cache/summer_qwen3_8b
+  graph_path: data/knowledge/summer/graph.json
+  json_mode: true
+  # Qwen3 on vLLM: omit this mapping if your provider does not support it.
+  chat_template_kwargs:
+    enable_thinking: false
+  neighbors: 10
+  cases_per_bucket: 5
+  summaries_per_role: 1
+  allow_missing_summaries: false
+  response_retries: 1
+  seed: 17
+knowledge:
+  items_path: data/knowledge/summer/items.json
+run:
+  seed: 17
+  batch_size: 2
+  budget: 8
+  replay_capacity: 8
+  eta: 0.5
+  threshold_quantile: 0.9
+  acquisition: disagreement
+  correction: adjudicated
+  evaluate_every: 1
+output: runs/k562_txpert_summer

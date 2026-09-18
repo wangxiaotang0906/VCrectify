@@ -1,0 +1,37 @@
+# Real TxPert architecture + explicit diagnostic memory reasoner (not SUMMER).
+project_root: ..
+python_paths: [.runtime/txpert_deps]
+data:
+  prepared: data/processed/k562_smoke
+numerical:
+  name: txpert
+  source_dir: third_party/TxPert-main
+  graph_path: third_party/TxPert-main/data/graphs/go/go_top_50.csv
+  seed: 17
+  device: cpu
+  fit_epochs: 3
+  update_epochs: 2
+  lr: 0.001
+  hidden_dim: 32
+  latent_dim: 16
+  graph_hidden_dim: 16
+  graph_layers: 1
+  dropout: 0.0
+  batch_size: 4
+  cells_per_condition: 4
+  top_k: 20
+reasoning:
+  name: reference_memory
+knowledge:
+  name: reference
+run:
+  seed: 17
+  batch_size: 2
+  budget: 8
+  replay_capacity: 8
+  eta: 0.5
+  threshold_quantile: 0.9
+  acquisition: disagreement
+  correction: adjudicated
+  evaluate_every: 1
+output: runs/k562_txpert_smoke

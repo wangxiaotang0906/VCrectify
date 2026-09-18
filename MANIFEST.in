@@ -1,0 +1,10 @@
+include LICENSE THIRD_PARTY_NOTICES.md CITATION.cff README.zh-CN.md requirements-tested.txt
+recursive-include configs *.yaml
+recursive-include docs *.md *.svg
+recursive-include tests *.py
+recursive-include scripts *.py
+prune third_party
+prune dataset
+prune data
+prune runs
+prune .runtime
