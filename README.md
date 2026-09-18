@@ -7,7 +7,7 @@
 
 </div>
 
-![VCrectify architecture](docs/architecture.pdf)
+![VCrectify architecture](architecture.pdf)
 
 VCrectify couples a numerical virtual cell with a knowledge-based reasoner. Both predict before a perturbation outcome is revealed. An adjudicator then corrects the numerical model, the evidence reliabilities, both, or neither. Updated states jointly select the next experiment.
 
