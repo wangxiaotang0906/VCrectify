@@ -13,8 +13,8 @@ VCrectify couples a numerical virtual cell with a knowledge-based reasoner. Both
 
 The framework is independent of the backbone. This release includes an adapter to the **official TxPert implementation**, an independently implemented **SUMMER adaptation**, and small, explicitly named reference models for testing. The biological example uses **Replogle K562 essential-gene Perturb-seq**.
 
-> **Release status.** This is a research implementation of the manuscript's loop, not a reproduction of its result tables. The service configuration uses **Qwen3-8B**, with the URL intentionally blank. A live SUMMER experiment requires a configured endpoint. The reference reasoner is not an LLM. See the [validation record](docs/validation.md) for what was actually executed.
-
+> The service configuration uses **Qwen3-8B**, with the URL intentionally blank. A live SUMMER experiment requires a configured endpoint.
+> 
 ## Quick start
 
 Python 3.9+; the standalone framework demo needs neither GPU nor model service.
