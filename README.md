@@ -20,7 +20,6 @@ The framework is independent of the backbone. This release includes an adapter t
 Python 3.9+; the standalone framework demo needs neither GPU nor model service.
 
 ```bash
-git clone https://github.com/wangxiaotang0906/VCrectify.git
 cd VCrectify
 python -m pip install -e ".[test]"
 python -m vcrectify demo --output runs/demo
