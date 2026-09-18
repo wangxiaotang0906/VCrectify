@@ -4,13 +4,10 @@
 
 **Evidence-adjudicated continual learning for virtual cells**
 
-Numerical prediction · Biological reasoning · Active acquisition
-
-[Quick start](#quick-start) · [Method](docs/method.md) · [Backbones](docs/backbones.md) · [Evaluation](docs/evaluation.md) · [中文](README.zh-CN.md)
 
 </div>
 
-![VCrectify architecture](docs/assets/architecture.svg)
+![VCrectify architecture](docs/assets/architecture.pdf)
 
 VCrectify couples a numerical virtual cell with a knowledge-based reasoner. Both predict before a perturbation outcome is revealed. An adjudicator then corrects the numerical model, the evidence reliabilities, both, or neither. Updated states jointly select the next experiment.
 
